@@ -68,6 +68,8 @@ class WindowArrangementUI(QWidget):
 
     def move_and_resize_window(self, x, y, width, height, tile_vertically=False, tile_horizontally=False):
         self.run_command(f"xdotool windowactivate --sync {self.ACTIVE_WINDOW_ID} key --clearmodifiers Alt+F5")
+        # move window to top left corner before resizing and moving it to ensure there's space to change size correctly
+        self.run_command(f"xdotool windowmove {self.ACTIVE_WINDOW_ID} 0 0") 
         self.run_command(f"xdotool windowsize {self.ACTIVE_WINDOW_ID} {width} {height} windowmove {self.ACTIVE_WINDOW_ID} {x} {y}")
 
         if tile_vertically:
