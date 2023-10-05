@@ -11,6 +11,32 @@ class WindowArrangementUI(QWidget):
         self.ACTIVE_WINDOW_ID = self.get_active_window_id()
         self.buttons = []  # List to hold all buttons
         self.initUI()
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #292d33;
+                color: #a2abba;
+                font-family: 'Nunito Sans';
+                font-size: 18px;
+            }
+            QPushButton {
+                background-color: #232428;
+                color: #a2abba;
+                font-weight: bold;
+                border: 1px solid #a2abba;
+                padding: 1px;
+            }
+            QPushButton:hover {
+                background-color: #3d3d3d;
+            }
+            QPushButton:pressed {
+                background-color: #1d1d1d;
+            }
+            QLabel {
+                font-size: 24px;
+                font-weight: bold;
+            }
+        """)
+    
 
     def initUI(self):
         self.show_initial_options()
@@ -71,11 +97,13 @@ class WindowArrangementUI(QWidget):
             btn.deleteLater()  # Schedule the button to be deleted later
         self.buttons = []
 
+
     def show_initial_options(self):
         self.clear_buttons()
-        self.setFixedSize(424, 366)
-        self.add_button('Main Display', 20, 20, 384, 216, self.show_main_display_options)
-        self.add_button('ScreenPad Plus', 20, 236, 384, 110, self.show_screenpad_plus_options)
+        self.setFixedSize(424, 416)
+        self.add_title("Choose a display:")
+        self.add_button('Main Display', 20, 70, 384, 216, self.show_main_display_options)
+        self.add_button('ScreenPad Plus', 20, 286, 384, 110, self.show_screenpad_plus_options)
 
 
     def move_and_resize_window(self, x, y, width, height, tile_vertically=False, tile_horizontally=False):
