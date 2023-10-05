@@ -15,6 +15,8 @@ class WindowArrangementUI(QWidget):
     def initUI(self):
         self.show_initial_options()
         self.setWindowFlags(Qt.WindowStaysOnTopHint)  # Ensure the UI stays on top
+        x, y, _, _ = self.get_active_window_geometry()
+        self.move(x, y)
         self.show()
 
 
@@ -28,6 +30,16 @@ class WindowArrangementUI(QWidget):
         command = "xdotool getactivewindow"
         result = subprocess.check_output(command, shell=True).decode('utf-8').strip()
         return result
+        
+    def get_active_window_geometry(self):
+        """Return the (x, y, width, height) of the active window."""
+        command = f"xdotool getwindowgeometry --shell {self.ACTIVE_WINDOW_ID}"
+        result = subprocess.check_output(command, shell=True).decode('utf-8').strip().split("\n")
+        geometry_info = {}
+        for line in result:
+            key, value = line.split("=")
+            geometry_info[key] = int(value)
+        return geometry_info["X"], geometry_info["Y"], geometry_info["WIDTH"], geometry_info["HEIGHT"]
     
 
     def add_title(self, text):
