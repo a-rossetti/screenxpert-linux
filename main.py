@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import time
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel
 from PyQt5.QtCore import Qt
 
@@ -16,7 +17,7 @@ class WindowArrangementUI(QWidget):
                 background-color: #292d33;
                 color: #a2abba;
                 font-family: 'Nunito Sans';
-                font-size: 18px;
+                font-size: 22px;
             }
             QPushButton {
                 background-color: #232428;
@@ -32,12 +33,11 @@ class WindowArrangementUI(QWidget):
                 background-color: #1d1d1d;
             }
             QLabel {
-                font-size: 24px;
+                font-size: 28px;
                 font-weight: bold;
             }
         """)
     
-
     def initUI(self):
         self.show_initial_options()
         self.setWindowFlags(Qt.WindowStaysOnTopHint)  # Ensure the UI stays on top
@@ -108,8 +108,7 @@ class WindowArrangementUI(QWidget):
 
     def move_and_resize_window(self, x, y, width, height, tile_vertically=False, tile_horizontally=False):
         self.run_command(f"xdotool windowactivate --sync {self.ACTIVE_WINDOW_ID} key --clearmodifiers Alt+F5")
-        # move window to top left corner before resizing and moving it to ensure there's space to change size correctly
-        self.run_command(f"xdotool windowmove {self.ACTIVE_WINDOW_ID} 0 0") 
+        self.run_command(f"xdotool windowmove {self.ACTIVE_WINDOW_ID} 0 0") # Move window to top left corner first to ensure there's space to resize correctly
         self.run_command(f"xdotool windowsize {self.ACTIVE_WINDOW_ID} {width} {height} windowmove {self.ACTIVE_WINDOW_ID} {x} {y}")
 
         if tile_vertically:
@@ -124,7 +123,7 @@ class WindowArrangementUI(QWidget):
         self.clear_buttons()
         self.setFixedSize(632, 430)
         self.add_title("Main Display")
-        self.add_back_button(self.initUI)
+        self.add_back_button(self.show_initial_options)
         self.add_button('Full\n Screen', 20, 70, 288, 162, lambda: self.move_and_resize_window(0, 0, 3840, 2160, True, True))
         self.add_button('Left\n half', 324, 70, 144, 162, lambda: self.move_and_resize_window(0, 0, 1920, 2160, True))
         self.add_button('Right\n half', 468, 70, 144, 162, lambda: self.move_and_resize_window(1920, 0, 1920, 2160, True))
@@ -139,7 +138,7 @@ class WindowArrangementUI(QWidget):
         self.clear_buttons()
         self.setFixedSize(424, 326)
         self.add_title("ScreenPad Plus")
-        self.add_back_button(self.initUI)
+        self.add_back_button(self.show_initial_options)
         self.add_button('Full\n Screen', 20, 70, 384, 110, lambda: self.move_and_resize_window(0, 2160, 3840, 1100, True, True))
         self.add_button('Left\n half', 20, 196, 192, 110, lambda: self.move_and_resize_window(0, 2160, 1920, 1100, True))
         self.add_button('Right\n half', 212, 196, 192, 110, lambda: self.move_and_resize_window(1920, 2160, 1920, 1100, True))
