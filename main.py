@@ -41,8 +41,8 @@ class WindowArrangementUI(QWidget):
     def initUI(self):
         self.show_initial_options()
         self.setWindowFlags(Qt.WindowStaysOnTopHint)  # Ensure the UI stays on top
-        x, y, _, _ = self.get_active_window_geometry()
-        self.move(x, y)
+        x, y, w, _ = self.get_active_window_geometry()
+        self.move(x + int(w/2) - 212, y)  # UI appears in the top-center of the active window
         self.show()
 
 
