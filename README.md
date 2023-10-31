@@ -1,3 +1,3 @@
 # screenxpert-linux
 
-ASUS ScreenXpert functionalities for Linux
+ASUS ScreenXpert: resize window functionalities for Linux
